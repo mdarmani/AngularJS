@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+  <head>
+    <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <script data-require="jquery@*" data-semver="2.1.1" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>    
+    <script data-require="angular.js@*" data-semver="1.3.0-beta.5" src="https://code.angularjs.org/1.4.7/angular.js"></script>
+    <script data-require="angular.js@*" data-semver="1.3.0" src="https://code.angularjs.org/1.4.7/angular-animate.js"></script>    
+    <script data-require="bootstrap@*" data-semver="3.1.1" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+
+  <body class="container" style="padding-top:30px">
+
+    <div ng-controller="mainCtrl" >
+      <user-info-card userz my-addition="user1"></user-info-card>
+      <user-info-card userz my-addition="user2"></user-info-card>
+    </div>
+    
+    <div ng-controller="secondCtrl">
+      <div class="destinations-card" twoWayStreet my-two-way-bind="portal"></div>
+    </div>
+
+    <div ng-controller="myController">  
+      <div my-directive my-text="Hallo {{ bar }}" my-two-way-bind="foo" my-one-way-bind="bar" my-attribute="{{ foo.name }}">
+      </div>
+    </div>  
+
+  </body>
+
+</html>

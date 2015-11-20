@@ -1,0 +1,26 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">{{userz.name}}</div>
+  <div class="panel-body">
+    <div ng-show='!!userz.address'>
+      <h4>Address:</h4>
+      {{userz.address.street}} <br />
+      {{userz.address.city}}<br />
+      {{userz.address.planet}}
+    </div> <br /> 
+    
+    <h4>Friends:</h4>
+    <ul>
+      <li ng-repeat='friend in userz.friends'>
+        {{friend}}
+      </li>
+    </ul>
+    <div>
+      Rank: {{userz.rank}}
+    </div><br>
+    <div ng-class="{'fade-in': userz.score >= 25}" ng-show="!!userz.rank" ng-hide="userz.rank == 'miner'" class="fade">
+      <span>Congratulations, you have the ranked up! Click the button below to claim your new rank now.</span>
+      <br />
+      <button class="btn btn-success" ng-click="knightMe(userz)">Knight Me</button>
+    </div>
+  </div>
+</div>

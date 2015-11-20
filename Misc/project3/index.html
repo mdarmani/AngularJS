@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+  <head>
+    <link href="https://s3.amazonaws.com/codecademy-content/projects/bootstrap.min.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Oxygen:300,400,700' rel='stylesheet' type='text/css'>
+      <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href="css/main.css" rel="stylesheet" />
+    <script src="js/vendor/angular.min.js"></script>
+  </head>
+  <body ng-app="BoltNetworkApp">
+    <div class="header">
+      <div class="container">
+        <img src="img/ordina.jpg" width="180" height="34">
+        <nav>
+			<ul>
+				<li><a href="#/home.html">Home</a></li>
+				<li><a href="#/about.html">About</a></li>
+				<li><a href="#/help.html">Help</a></li>
+			</ul>
+		</nav>
+      </div>
+    </div>
+    
+    <div class="intro" ng-controller="MainController">
+    	<h1>{{ intro.introductie }}</h1>
+    </div>
+
+    <div class="main" ng-controller="MainController">
+      <h1>{{ program.titel }}</h1>
+      <div class="description">{{ program.description }}</div>
+      <div class="date-time"></div>
+      <div class="container">
+        <div class="content">
+          <div class="row">
+            
+            <div class="col-md-3" class="series_img">
+            </div>
+            
+            <div class="col-md-3">
+              <h1 class="series"></h1>
+              <h2 class="episode"></h2>
+              <p class="description"></p>
+            </div>
+            
+            <div class="col-md-3">
+              <ul class="list-group">
+                <li class="list-group-item"><span>Date: {{ program.datetime | date }}</span>  </li>
+                <li class="list-group-item"><span>On air: {{ program.datetime | date: 'EEEE' }}</span>  </li>
+                <li class="list-group-item"><span>Time: {{ program.datetime | date: 'shortTime' }}</span>  </li>
+                <li class="list-group-item"><span>Season: {{ program.season }}</span>  </li>
+                <li class="list-group-item"><span>Genre: {{ program.genre }}</span>  </li>
+              </ul>
+            </div>
+
+            <div class="col-md-3">
+              <ul class="list-group">
+                <li class="list-group-item"><span>Date: {{ program.datetime | date }}</span>  </li>
+                <li class="list-group-item"><span>On air: {{ program.datetime | date: 'EEEE' }}</span>  </li>
+                <li class="list-group-item"><span>Time: {{ program.datetime | date: 'shortTime' }}</span>  </li>
+                <li class="list-group-item"><span>Season: {{ program.season }}</span>  </li>
+                <li class="list-group-item"><span>Genre: {{ program.genre }}</span>  </li>
+              </ul>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <h3>Bolt</h3>
+            <ul>
+              <li>Careers</li>
+              <li>Terms</li>
+              <li>Help</li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <h3>More Bolt</h3>
+            <ul>
+              <li>Gift Cards</li>
+              <li>Trailers</li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <h3>News</h3>
+            <ul>
+              <li>Blog</li>
+              <li>Twitter</li>
+              <li>YouTube</li>
+              <li>Google+</li>
+              <li>Facebook</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    
+    <!-- Modules -->
+    <script src="js/app.js"></script>
+
+    <!-- Controllers -->
+    <script src="js/controllers/MainController.js"></script>
+  </body>

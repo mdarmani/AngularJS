@@ -1,0 +1,31 @@
+.fade {
+	position: absolute;
+    top: -1000px;
+    opacity: 0;
+    transition: all 1s linear;
+}
+
+.fade.fade-in {
+	position: static;
+    opacity: 1;
+    
+    transition: all 1s linear;
+}
+
+.fade.fade-in.ng-hide {
+	position: static;
+    opacity: 0;
+    
+    transition: all 1s linear;
+}
+
+.fade.fade-out {
+	position: static;
+    opacity: 0;
+    display: block;
+}
+
+.btn.btn-success.fade-out {
+	opacity: 0;
+    transition: all 1s linear;
+}

@@ -1,0 +1,1 @@
+var ordinaSW = angular.module("BoltNetworkApp", []);

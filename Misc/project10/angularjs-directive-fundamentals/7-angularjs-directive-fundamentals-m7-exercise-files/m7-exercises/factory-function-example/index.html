@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+  <head>
+    <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <script data-require="jquery@*" data-semver="2.1.1" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://code.angularjs.org/1.3.5/angular.js"></script>
+    <script data-require="bootstrap@*" data-semver="3.1.1" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+
+  <div class='container' ng-app='ExampleApp' ng-controller='ExampleCtrl'>
+    <form ng-submit='updateUser();'>
+      <div class='form-group'>
+        <label>First name</label>
+        <input type='text' class='form-control' ng-model='user.info.first'>
+      </div>
+
+      <div class='form-group'>
+        <label>Last name</label>
+        <input type='text' class='form-control' ng-model='user.info.last'>
+      </div>
+
+      <div class='form-group'>
+        <label>Email</label>
+        <input type='text' class='form-control' ng-model='user.info.email'>
+      </div>
+
+      <button class='btn btn-primary' type='submit'>
+        Submit
+      </button>
+    </form>
+  </div>
+
+</html>
+
+
+
