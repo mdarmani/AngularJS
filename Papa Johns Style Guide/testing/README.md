@@ -1,8 +1,8 @@
-# H1
+# This hub shows how an exmaple of how John Paps's Style Guide can effectively applied in a working example.
 
 ## H2
 
-To get you started you can simply clone the angular-seed repository and install the dependencies:
+Some information would go here.
 
 ### H3
 
