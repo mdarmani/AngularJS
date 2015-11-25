@@ -1,0 +1,10 @@
+<h2>Using 'controller as' syntax</h2>
+
+<div class="container" id="ctrl-as-exmpl" ng-controller="controllerAsMethod as settings">
+  <label>Name: <input id="inputField" type="text" ng-model="settings.name"/></label>
+  <button ng-click="settings.greet()">greet</button><br/>
+  <ul>
+    <pre>Original = {{vm.name | json}}</pre>
+  	<pre>Current = {{master | json}}</pre>
+ </ul>
+</div>
