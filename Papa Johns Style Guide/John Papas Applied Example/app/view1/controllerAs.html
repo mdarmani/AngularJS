@@ -2,9 +2,9 @@
 
 <div class="container" id="ctrl-as-exmpl" ng-controller="controllerAsMethod as settings">
   <label>Name: <input id="inputField" type="text" ng-model="settings.name"/></label>
-  <button ng-click="settings.greet()">greet</button><br/>
+  <button ng-click="settings.save(settings.name)">Save</button><br/>
   <ul>
-    <pre>Original = {{vm.name | json}}</pre>
-  	<pre>Current = {{master | json}}</pre>
+    <pre>Original = <span ng-bind="settings.original">{{ settings.newOriginal }}</span></pre>
+  	<pre>Current = <span ng-bind="settings.name"> {{ settings.current }}</span></pre>
  </ul>
 </div>

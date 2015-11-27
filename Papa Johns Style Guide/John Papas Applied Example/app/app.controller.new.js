@@ -21,33 +21,27 @@
     		]
 
     		//Create an empty array
-			vm.original = [''];
+			vm.original = [];	
+			
+			$log.info(vm.original);	
 
 		    //Apply a save function to add a value to the array and replace it every time 'Save' is clicked
 		  	vm.save = function() {
 		 		vm.original.push(vm.name);
-		 		if (vm.original.length > 2) {
+		 		if (vm.original.length > 1) {
 		 			vm.original.shift();
-		 		}		 		
+		 		}
 
-		 		vm.newOriginal = vm.original[0];
+		 		$log.info(vm.original);
+			}			
 
-		 		vm.current = vm.name;
-
-		 		$scope.$watch('vm.original', function(current, original) {
-		 			original =  vm.newOriginal;
-					current = vm.current;
-					if(original == '') {
-						console.log('Not possible to compare, no inital name present');
-					} else if (original !== current) {
-			        	$log.info('Names are not the same');
-			        } else {
-			        	$log.info('Names are the same');
-			        }
-			    });
-			}
-
-			
+			//Using $watch method to watch for changes to input
+			$scope.$watch('vm.original', function() {	
+				$log.info(vm.original);
+				if (vm.original[0] !== vm.original[0]) {
+					alert('omg, sometin changuhhh'); 
+				}				       		
+    		})
 
 		}
 
