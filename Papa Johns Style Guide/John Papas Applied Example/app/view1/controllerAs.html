@@ -4,7 +4,7 @@
   <label>Name: <input id="inputField" type="text" ng-model="settings.name"/></label>
   <button ng-click="settings.save(settings.name)">Save</button><br/>
   <ul>
-    <pre>Original = <span ng-bind="settings.original">{{ settings.newOriginal }}</span></pre>
+    <pre>Original = <span ng-bind="settings.original">{{ settings.previous }}</span></pre>
   	<pre>Current = <span ng-bind="settings.name"> {{ settings.current }}</span></pre>
  </ul>
 </div>

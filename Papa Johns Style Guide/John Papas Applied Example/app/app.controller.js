@@ -24,26 +24,37 @@
 			vm.original = [''];
 
 		    //Apply a save function to add a value to the array and replace it every time 'Save' is clicked
-		  	vm.save = function() {
-		 		vm.original.push(vm.name);
-		 		if (vm.original.length > 2) {
-		 			vm.original.shift();
-		 		}		 		
+		  	vm.save = function() {	
 
-		 		vm.newOriginal = vm.original[0];
+		  		if (!isNaN(vm.name)) {
+		  			throw alert('Sorry, not a valid name. Please try again.');
+		  		} else {
+		  			vm.original.push(vm.name);
+			 		if (vm.original.length > 2) {
+			 			vm.original.shift();
+			 		}
+		  		}						 				 		
 
-		 		vm.current = vm.name;
+		 		vm.previous = vm.original[0];
+		 		vm.current = vm.original[1];
 
-		 		$scope.$watch('vm.original', function(current, original) {
-		 			original =  vm.newOriginal;
-					current = vm.current;
-					if(original == '') {
-						console.log('Not possible to compare, no inital name present');
-					} else if (original !== current) {
-			        	$log.info('Names are not the same');
-			        } else {
-			        	$log.info('Names are the same');
-			        }
+		 		//Improvised watch function
+		 		$scope.$watch('vm.original', function(previous, current) {
+		 			previous = vm.original[0];
+		 			current = vm.original[1];
+		 			if (previous == "" && current == undefined) {
+		 				alert('I need names to compare. Please enter names.');
+		 			} else if ((previous == undefined && typeof current === 'string') || (previous == '' && typeof current === 'string')) {
+		 				alert('Great, I just need one more name.')
+		 			} else if (previous == undefined && current == undefined) {
+		 				alert('Are you sure you are entering names?')
+		 			} else if (typeof previous === 'string' && current == "") {
+		 				alert('You did not enter second name. Please try again.');
+		 			} else if (previous !== current) {
+		 				alert('Names are not the same.');
+		 			} else if (previous == current) {
+		 				alert('Names are the same.');
+		 			}
 			    });
 			}
 
