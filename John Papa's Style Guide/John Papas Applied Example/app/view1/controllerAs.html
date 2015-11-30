@@ -1,12 +1,33 @@
-<h2>Using 'controller as' syntax</h2>
+<div class="container" id="ctrl-as-exmpl" ng-controller="controllers as settings">
+	<h3>{{ settings.array4[0] }}</h3>
 
-<div class="container" id="ctrl-as-exmpl" ng-controller="controllerAsMethod as settings">
-  <label>Name: <input id="inputField" type="text" ng-model="settings.name"/></label>
-  <button ng-click="settings.save(settings.name)">Save</button><br/>
-  <ul>
-    <pre>Original = <span ng-bind="settings.original">{{ settings.previous }}</span></pre>
-  	<pre>Current = <span ng-bind="settings.name"> {{ settings.current }}</span></pre>
+	<code>&lt;div ng-controller="CustomerController as customer"&gt; &lcub; &lcub; customer.name &rcub; &rcub; &lt;/div&gt;</code>
 
-  	<button ng-click="settings.countUp()">Add 1</button>
- </ul>
+	
+	<h3>{{ settings.array4[1] }}</h3>
+	<h3>{{ settings.array4[2] }}</h3>
+	
+
+	<label>Name: <input id="inputField" type="text" ng-model="settings.name"/></label>
+	<button ng-click="settings.save(settings.name)">Save</button><br/>
+	<ul>
+	    <pre>Original = <span ng-bind="settings.original">{{ settings.previous }}</span></pre>
+	  	<pre>Current = <span ng-bind="settings.name"> {{ settings.current }}</span></pre>
+	</ul>
+
+	<h4>Counting up</h4>
+	<button ng-click="settings.countUp()">Add 1: </button><span> {{ settings.count }}</span>
+
+	
+	<h3>{{ settings.array4[3] }}</h3>
+	<button ng-click="settings.gotoSession()">Go to Session</button>
+	<button ng-click="settings.refresh()">Refresh</button>
+	<button ng-click="settings.search()">Search</button>
+
+	<h3>{{ settings.array4[4] }}</h3>
+	<h3>{{ settings.array4[5] }}</h3>
+	<h3>{{ settings.array4[6] }}</h3>
+	<h3>{{ settings.array4[7] }}</h3>
+
+
 </div>
