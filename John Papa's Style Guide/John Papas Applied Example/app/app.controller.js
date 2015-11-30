@@ -22,6 +22,7 @@
 
     		//Create an empty array
 			vm.original = [''];
+			vm.count = 0;
 
 		    //Apply a save function to add a value to the array and replace it every time 'Save' is clicked
 		  	vm.save = function() {	
@@ -33,32 +34,22 @@
 			 		if (vm.original.length > 2) {
 			 			vm.original.shift();
 			 		}
-		  		}						 				 		
+		  		}					 				 		
 
 		 		vm.previous = vm.original[0];
 		 		vm.current = vm.original[1];
 
-		 		//Improvised watch function
-		 		$scope.$watch('vm.original', function(previous, current) {
-		 			previous = vm.original[0];
-		 			current = vm.original[1];
-		 			if (previous == "" && current == undefined) {
-		 				alert('I need names to compare. Please enter names.');
-		 			} else if ((previous == undefined && typeof current === 'string') || (previous == '' && typeof current === 'string')) {
-		 				alert('Great, I just need one more name.')
-		 			} else if (previous == undefined && current == undefined) {
-		 				alert('Are you sure you are entering names?')
-		 			} else if (typeof previous === 'string' && current == "") {
-		 				alert('You did not enter second name. Please try again.');
-		 			} else if (previous !== current) {
-		 				alert('Names are not the same.');
-		 			} else if (previous == current) {
-		 				alert('Names are the same.');
-		 			}
-			    });
 			}
 
-			
+			//With the $watch function that is supposed to work
+			$scope.$watch('vm.count', function(current, original) {
+		        $log.info('vm.count was %s', original);
+		        $log.info('vm.count is now %s', current);
+		    })			
+
+		    vm.countUp = function(){
+				vm.count += 1;
+			}
 
 		}
 
