@@ -1,7 +1,7 @@
 <div class="container" id="ctrl-as-exmpl" ng-controller="controllers as settings">
 	<h3>{{ settings.array4[0] }}</h3>
 	<p>Using the controllerAs syntax over the classic controller with $scope syntax.</p>
-	<p>&lt;div class="container" id="ctrl-as-exmpl" ng-controller="controllers as settings"&gt; &lcub; &lcub; settings.name &rcub; &rcub; &lt;/div&gt;</p>
+	<pre>&lt;div class="container" id="ctrl-as-exmpl" ng-controller="controllers as settings"&gt; &lcub; &lcub; settings.name &rcub; &rcub; &lt;/div&gt;</pre>
 	
 	<h3>{{ settings.array4[1] }}</h3>
 <pre>
@@ -11,11 +11,25 @@ function CustomerController() {
     this.sendMessage = function() { };
 }
 </pre>
-
-	<p></p>
 	<h3>{{ settings.array4[2] }}</h3>
-	
-
+	<h4>4.3.1 Check previous and current name application</h4>
+	<p>This application takes a name and compares the last name input with the next. It accepts strings and rejects integers. We are also using Angular's $watch function to watch for changes to the last element in the array.</p>
+<pre>
+vm.original = [''];
+vm.save = function() {
+	if (!isNaN(vm.name)) {
+		throw alert('Sorry, not a valid name. Please try again.');
+	} else {
+		vm.original.push(vm.name);
+		if (vm.original.length > 2) {
+			vm.original.shift();
+		}
+	}					 				 		
+	vm.previous = vm.original[0];
+	vm.current = vm.original[1];
+}
+</pre>
+	<br>	
 	<label>Name: <input id="inputField" type="text" ng-model="settings.name"/></label>
 	<button ng-click="settings.save(settings.name)">Save</button><br/>
 	<ul>
@@ -25,7 +39,7 @@ function CustomerController() {
 
 	<h4>Counting up</h4>
 	<button ng-click="settings.countUp()">Add 1: </button><span> {{ settings.count }}</span>
-
+	<p>If you look in the console, you will see that we are watching the changes to the names array using Angular's $watch function. Open your console and go ahead and add Names to the array.</p>
 	
 	<h3>{{ settings.array4[3] }}</h3>
 	<button ng-click="settings.gotoSession()">Go to Session</button>
