@@ -1,9 +1,9 @@
 <div class="container" id="ctrl-as-exmpl" ng-controller="controllers as settings">
-	<h3>{{ settings.array4[0] }}</h3>
+	<h3>4.1 controllerAs View Syntax</h3>
 	<p>Using the controllerAs syntax over the classic controller with $scope syntax.</p>
 	<pre>&lt;div class="container" id="ctrl-as-exmpl" ng-controller="controllers as settings"&gt; &lcub; &lcub; settings.name &rcub; &rcub; &lt;/div&gt;</pre>
 	
-	<h3>{{ settings.array4[1] }}</h3>
+	<h3>4.2 controllerAs Controller Syntax</h3>
 <pre>
 /* recommended - but see next section */
 function CustomerController() {
@@ -11,7 +11,7 @@ function CustomerController() {
     this.sendMessage = function() { };
 }
 </pre>
-	<h3>{{ settings.array4[2] }}</h3>
+	<h3>4.3 controllerAs with vm</h3>
 	<h4>4.3.1 Check previous and current name application</h4>
 	<p>This application takes a name and compares the last name input with the next. It accepts strings and rejects integers. We are also using Angular's $watch function to watch for changes to the last element in the array.</p>
 <pre>
@@ -37,19 +37,48 @@ vm.save = function() {
 	  	<pre>Current = <span ng-bind="settings.name"> {{ settings.current }}</span></pre>
 	</ul>
 
-	<h4>Counting up</h4>
+	<h4>4.3.2 Counting up</h4>
 	<button ng-click="settings.countUp()">Add 1: </button><span> {{ settings.count }}</span>
 	<p>If you look in the console, you will see that we are watching the changes to the names array using Angular's $watch function. Open your console and go ahead and add Names to the array.</p>
-	
-	<h3>{{ settings.array4[3] }}</h3>
-	<button ng-click="settings.gotoSession()">Go to Session</button>
-	<button ng-click="settings.refresh()">Refresh</button>
-	<button ng-click="settings.search()">Search</button>
-
-	<h3>{{ settings.array4[4] }}</h3>
-	<h3>{{ settings.array4[5] }}</h3>
-	<h3>{{ settings.array4[6] }}</h3>
-	<h3>{{ settings.array4[7] }}</h3>
-
-
 </div>
+
+<div class="container" ng-controller="SessionsController as options">
+	<h3>4.4 Bindable Members Up Top</h3>
+		<p>John recommends that you place bindable members at the top of the controller, alphabetized, and not spread throughout the controller code. </p>
+		<p>Why?: Placing bindable members at the top makes it easy to read and helps you instantly identify which members of the controller can be bound and used in the View.</p>
+		<p>Why?: Setting anonymous functions in-line can be easy, but when those functions are more than 1 line of code they can reduce the readability. Defining the functions below the bindable members (the functions will be hoisted) moves the implementation details down, keeps the bindable members up top, and makes it easier to read.</p>
+		<p>I have created three functions that illustate what John means by this.</p>
+		<button ng-click="options.gotoSession()">Go to Session</button>
+		<button ng-click="options.refresh()">Refresh</button>
+		<button ng-click="options.search()">Search</button>
+
+		<p>Now take a look at the code used:</p>
+
+		<pre>
+	/* 4.4 Bindable Members Up Top */
+	vm.gotoSession = gotoSession;
+	vm.refresh = refresh;
+	vm.search = search;
+	vm.sessions = [];
+
+	function gotoSession() {
+	 	$log.info('Executed gotoSession()');
+	}
+
+	function refresh() {
+	   	$log.info('Executed refresh()');		    
+	}
+
+	function search() {
+	   	$log.info('Executed search()');
+	}
+	</pre>
+	<p>Notice that in the console, you will see these functions being executed every time a button is clicked.</p>
+
+	<p>{{ sessions.sessions }}</p>
+</div>
+
+	<h3>4.4 Function Declarations to Hide Implementation Details</h3>
+	<h3>4.5 Defer Controller Logic to Services</h3>
+	<h3>4.6 Keep Controllers Focused</h3>
+	<h3>4.7 Assigning Controllers</h3>
