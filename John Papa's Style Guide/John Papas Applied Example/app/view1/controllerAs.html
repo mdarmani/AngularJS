@@ -1,10 +1,18 @@
 <div class="container" id="ctrl-as-exmpl" ng-controller="controllers as settings">
 	<h3>{{ settings.array4[0] }}</h3>
-
-	<code>&lt;div ng-controller="CustomerController as customer"&gt; &lcub; &lcub; customer.name &rcub; &rcub; &lt;/div&gt;</code>
-
+	<p>Using the controllerAs syntax over the classic controller with $scope syntax.</p>
+	<p>&lt;div class="container" id="ctrl-as-exmpl" ng-controller="controllers as settings"&gt; &lcub; &lcub; settings.name &rcub; &rcub; &lt;/div&gt;</p>
 	
 	<h3>{{ settings.array4[1] }}</h3>
+<pre>
+/* recommended - but see next section */
+function CustomerController() {
+    this.name = {};
+    this.sendMessage = function() { };
+}
+</pre>
+
+	<p></p>
 	<h3>{{ settings.array4[2] }}</h3>
 	
 

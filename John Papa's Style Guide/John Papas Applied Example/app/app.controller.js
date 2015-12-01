@@ -28,7 +28,12 @@
 
     		//Create an empty array
 			vm.original = [''];
+			
+			//A counting function
 			vm.count = 0;
+			vm.countUp = function(){
+				vm.count += 1;
+			}
 
 		    //Apply a save function to add a value to the array and replace it every time 'Save' is clicked
 		  	vm.save = function() {	
@@ -47,17 +52,30 @@
 
 			}
 
-			//With the $watch function that is supposed to work
-			$scope.$watch('vm.count', function(current, original) {
-		        $log.info('vm.count was %s', original);
-		        $log.info('vm.count is now %s', current);
-		    })			
+			/* Watch Functions */
 
-		    vm.countUp = function(){
-				vm.count += 1;
-			}
+			//A watch function to see when the name changes
+            $scope.$watch(
+                function () {
+                    return( vm.current );
+                },
+                function ( newValue, oldValue ) {
+                	console.log( "Old value was:", oldValue );
+                    console.log( "New value was:", newValue );
+                }
+            )
 
-		
+            //A watch function to watch the counter function
+            $scope.$watch(
+                function () {
+                    // Return the "result" of the watch expression.
+                    return( vm.count );
+                },
+                function ( newValue, oldValue ) {
+                    console.log( "fn( vm.count ):", oldValue );
+                    console.log( "fn( vm.count ):", newValue );
+                }
+            );		
 
 			/* 4.4 Bindable Members Up Top */
 			vm.gotoSession = gotoSession;
