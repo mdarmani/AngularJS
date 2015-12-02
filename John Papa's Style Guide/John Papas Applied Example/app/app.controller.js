@@ -10,6 +10,8 @@
 
         .controller('SessionsController', SessionsController)
 
+        .controller('AvengersController', AvengersController)
+
 		function controllers($scope, $log) {
 
 			//Set this to vm to represent ViewModel and also prevent jshint warnings by including the comment below.
@@ -67,12 +69,12 @@
                 }
             );		
 
-			/* 4.4 Bindable Members Up Top */
+			
 			
 		}
 
-
-
+		/* 4.4 Bindable Members Up Top */
+		/* recommended */
 		function SessionsController($log, sessionDataService) {
 			var vm = this;
 			vm.gotoSession = gotoSession;
@@ -85,13 +87,35 @@
 			 	$log.info('Executed gotoSession()');
 			}
 
-			function refresh() {
-				//sessions.push('2erferik');
-			   	$log.info('Executed refresh()');		    
-			}
-
 			function search() {
 			   	$log.info('Executed search()');
 			}
+		}
+
+		/* 4.5 Function Declarations to Hide Implementation Details
+		* recommend
+		* Using function declarations
+		* and bindable members up top.
+		*/
+		function AvengersController(avengersService, logger) {
+		    var vm = this;
+		    vm.avengers = [];
+		    vm.getAvengers = getAvengers;
+		    vm.title = 'Avengers';
+
+		    activate();
+
+		    function activate() {
+		        return getAvengers().then(function() {
+		            logger.info('Activated Avengers View');
+		        });
+		    }
+
+		    function getAvengers() {
+		        return avengersService.getAvengers().then(function(data) {
+		            vm.avengers = data;
+		            return vm.avengers;
+		        });
+		    }
 		}
 })();
