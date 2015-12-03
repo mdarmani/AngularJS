@@ -18,7 +18,8 @@
         		refresh: function () {     		
 			   		$log.info('Executed refresh()');		    
 				},
-				getAvengers: function () {					
+				getAvengers: function() {		
+				console.log('getting data');			
 					var avengers = [
 						{						
 							'Name': 'Iron Man',
@@ -38,7 +39,8 @@
 							'Member Since': '1963',
 							'Notes': 'Became Giant-Man in Avengers #2 (1963), Goliath in Avengers #28 (1966), and Yellowjacket in Avengers #59 (1969). Expelled as Yellowjacket in Avengers #213 (1981). Joined West Coast Branch as Doctor Pym in West Coast Avengers #21 (1988). Became The Wasp in Mighty Avengers #21 (March 2009). He is one of only two members, the other being Kelsey Leigh (Captain Britain), who have Avengers status in both their civilian and superhero guises. Formerly the head of the Avengers Academy, former member of the Secret Avengers and formerly the leader of the Avengers A.I. Squad. Currently merged with Ultron.',
 						}
-					]										
+					]
+					console.log('getting data DONE');										
 				}
         	}        	 
 		})
