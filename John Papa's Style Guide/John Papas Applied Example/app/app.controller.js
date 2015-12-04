@@ -97,25 +97,20 @@
 		* Using function declarations
 		* and bindable members up top.
 		*/
-		function AvengersController(avengersService, logger) {
-		    var vm = this;
+		function AvengersController( avengersService, logger) {
+		    var vm      = this;
 		    vm.avengers = [];
-		    vm.getAvengers = getAvengers;
-		    vm.title = 'Avengers';
+		    vm.title    = 'Get the Avengers and log the retrieval';		    
 
-		    activate();
-
-		    function activate() {
-		        return getAvengers().then(function() {
-		            logger.info('Activated Avengers View');
+		    vm.active = function activate() {
+		        retrieveAvengers().then(function() {
+		        	logger.info('Activated Avengers View');
 		        });
 		    }
 
-		    function getAvengers() {
-		        return avengersService.getAvengers().then(function(data) {
-		            vm.avengers = data;
-		            return vm.avengers;
-		        });
-		    }
+		    function retrieveAvengers() {
+		    	vm.avengers = avengersService.getAvengers();
+		    	//activate();                
+            }
 		}
 })();
