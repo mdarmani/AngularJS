@@ -88,8 +88,14 @@ function search() {
 <div class="container" ng-controller="AvengersController as avengerControl">
 	<h3>4.4 Function Declarations to Hide Implementation Details</h3>
 	<h2>{{ avengerControl.title }}</h2>
-	<button ng-click="avengerControl.active()">Get Avengers</button>
-	<p>{{ avengerControl.avengers }}</p>
+	<button ng-click="avengerControl.activate()">Get Avengers</button>
+
+	<ul ng-repeat="hero in avengerControl.avengers">
+		  <li><b>Name: </b>{{hero.Name}}</li>
+		  <li><b>Real Name: </b>{{hero.RealName}}</li>
+		  <li><b>Member since: </b>{{hero.MemberSince}}</li>
+		  <li><b>Extra notes: </b>{{hero.Notes}}</li>		  	
+	</ul>
 	
 
 </div>
