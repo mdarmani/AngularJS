@@ -3,5 +3,5 @@
     'use strict';
 
     angular
-        .service('myApp')
+        .module('myApp')
 })();

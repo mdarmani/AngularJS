@@ -15,9 +15,6 @@
 
 		.factory('avengersService', function ($log) {
         	return {
-        		refresh: function () {     		
-			   		$log.info('Executed refresh()');		    
-				},
 				getAvengers: function() {
 					$log.info('getting data...');
 				    return [
@@ -46,5 +43,17 @@
 
 		.factory('logger', function() {
 		    return { name: 'The Catcher in the Rye', author: 'J. D. Salinger' };
-		});
+		})
+
+		.factory('creditService', function ($log) {
+        	return {
+				isOrderTotalOk: function(total) {					
+					if (total <= 0) {
+						return 'Sorry, not enough balance';
+					} else {
+						return 'Your balance is ' + total + ' . Now that was fun wasn\'t it?';
+					}					
+				}
+        	}        	 
+		})
 })();

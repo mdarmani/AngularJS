@@ -12,6 +12,8 @@
 
         .controller('AvengersController', AvengersController)
 
+        .controller('OrderController', OrderController)
+
 		function controllers($scope, $log) {
 
 			//Set this to vm to represent ViewModel and also prevent jshint warnings by including the comment below.
@@ -51,7 +53,7 @@
                 function () {
                     return( vm.current );
                 },
-                function ( newValue, oldValue ) {
+                function (newValue, oldValue) {
                 	console.log( "Old value was:", oldValue );
                     console.log( "New value was:", newValue );
                 }
@@ -63,13 +65,11 @@
                     // Return the "result" of the watch expression.
                     return( vm.count );
                 },
-                function ( newValue, oldValue ) {
+                function (newValue, oldValue) {
                     console.log( "fn( vm.count ):", oldValue );
                     console.log( "fn( vm.count ):", newValue );
                 }
-            );		
-
-			
+            );			
 			
 		}
 
@@ -95,7 +95,7 @@
 		/* 4.5 Function Declarations to Hide Implementation Details */		
 		/* recommended */
 		/* Using function declarations and bindable members up top. */
-		function AvengersController( avengersService, $log) {
+		function AvengersController(avengersService, $log) {
 		    var vm      = this;
 		    vm.avengers = [];
 		    vm.activate = activate;
@@ -110,5 +110,16 @@
 		    	vm.avengers = avengersService.getAvengers();
 		    	//activate();                
             }
+		}
+
+		function OrderController(creditService) {
+		    var vm = this;
+		    vm.checkCredit = checkCredit;
+		    vm.isCreditOk;
+		    vm.total = 10;
+
+		    function checkCredit() {
+		       	vm.returnBalance = creditService.isOrderTotalOk(vm.total);		       	
+		    };
 		}
 })();
