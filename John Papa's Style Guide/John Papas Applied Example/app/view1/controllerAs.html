@@ -86,9 +86,68 @@ function search() {
 </div>
 
 <div class="container" ng-controller="AvengersController as avengerControl">
-	<h3>4.4 Function Declarations to Hide Implementation Details</h3>
-	<h2>{{ avengerControl.title }}</h2>
-	<button ng-click="avengerControl.activate()">Get Avengers</button>
+	<h3>4.5 Function Declarations to Hide Implementation Details</h3>
+	<p>John Papa recommends that we add the important stuff at the top of the code stack. If you look a the code below, I add vm.activate and vm.title at the top because this is easier to read and understand not only for yourself but for the next developer who reads your code.</p>
+
+<pre>
+function AvengersController( avengersService, $log) {
+    var vm      = this;
+    vm.avengers = [];
+    vm.activate = activate; <b>//Good practice</b>
+    vm.title    = 'Get the Avengers and log the retrieval'; <b>//Good practice</b>    
+
+    function activate() {
+        retrieveAvengers();
+        $log.info('Avengers retrieval successful!');
+    }
+
+    function retrieveAvengers() {
+    	vm.avengers = avengersService.getAvengers();
+    	//activate();                
+    }
+}
+</pre>
+
+	<p>Now I just put the code into action. The activate function up binded to the button below which in turn retrieves the Avengers and creates a log in the console.</p>
+	
+<pre>
+
+.factory('avengersService', function ($log) {
+	return {
+		refresh: function () {     		
+	   		$log.info('Executed refresh()');		    
+		},
+		getAvengers: function() {
+			$log.info('getting data...');
+		    return [
+		        {
+		            Name: 'Iron Man',
+		            RealName: 'Anthony "Tony" Edward Stark',
+		            MemberSince: '1963',
+		            Notes: 'Founder of original roster. Joined West Coast Branch in West Coast Avengers vol. 2 #1 (1984). Expelled for Armor War (1987). Current member of the main Avengers team.'
+		        },
+		        {
+		            Name: 'Thor',
+		            RealName: 'Thor Odinson (a.k.a. Dr. Donald Blake, Sigurd Jarlson, Jake Olsen, Odinson)',
+		            MemberSince: '1963',
+		            Notes: 'Former member of the main Avengers team.',
+		        },
+		        {
+		            Name: 'Ant-Man',
+		            RealName: 'Dr. Henry Jonathan "Hank" Pym',
+		            MemberSince: '1963',
+		            Notes: 'Became Giant-Man in Avengers #2 (1963), Goliath in Avengers #28 (1966), and Yellowjacket in Avengers #59 (1969). Expelled as Yellowjacket in Avengers #213 (1981). Joined West Coast Branch as Doctor Pym in West Coast Avengers #21 (1988). Became The Wasp in Mighty Avengers #21 (March 2009). He is one of only two members, the other being Kelsey Leigh (Captain Britain), who have Avengers status in both their civilian and superhero guises. Formerly the head of the Avengers Academy, former member of the Secret Avengers and formerly the leader of the Avengers A.I. Squad. Currently merged with Ultron.',
+		        }
+		    ]
+		}
+	}        	 
+})
+</pre>
+
+	<h5>{{ avengerControl.title }}</h5>
+
+	<p>When the button below is clicked, we retrieve the list of Avengers from the data object array and return them in an unordered list. A log is registered everytime the button is clicked (see the console).</p>
+	<button ng-click="avengerControl.activate()">Get Avengers</button>	
 
 	<ul ng-repeat="hero in avengerControl.avengers">
 		  <li><b>Name: </b>{{hero.Name}}</li>
@@ -96,10 +155,9 @@ function search() {
 		  <li><b>Member since: </b>{{hero.MemberSince}}</li>
 		  <li><b>Extra notes: </b>{{hero.Notes}}</li>		  	
 	</ul>
-	
 
 </div>
 	
-	<h3>4.5 Defer Controller Logic to Services</h3>
-	<h3>4.6 Keep Controllers Focused</h3>
-	<h3>4.7 Assigning Controllers</h3>
+	<h3>4.6 Defer Controller Logic to Services</h3>
+	<h3>4.7 Keep Controllers Focused</h3>
+	<h3>4.8 Assigning Controllers</h3>

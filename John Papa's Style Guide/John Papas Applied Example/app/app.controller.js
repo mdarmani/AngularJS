@@ -92,11 +92,9 @@
 			}
 		}
 
-		/* 4.5 Function Declarations to Hide Implementation Details
-		* recommend
-		* Using function declarations
-		* and bindable members up top.
-		*/
+		/* 4.5 Function Declarations to Hide Implementation Details */		
+		/* recommended */
+		/* Using function declarations and bindable members up top. */
 		function AvengersController( avengersService, $log) {
 		    var vm      = this;
 		    vm.avengers = [];
