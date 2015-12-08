@@ -9,4 +9,3 @@
 		  $routeProvider.otherwise({redirectTo: '/view1'});
 		}])  
 })();
-

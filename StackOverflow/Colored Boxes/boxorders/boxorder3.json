@@ -1,0 +1,30 @@
+{
+    "id": 15,
+    "color": "green",
+    "isBox": "true"
+    {
+        "id": 3,
+        "type": "blue",
+        "isBox": "true"
+        {
+            "id": 8,
+            "type": "red",
+            "isBox": "true"
+        }
+            {
+                "id": 15,
+                "type": "green",
+                "isBox": "true"
+            }
+            {
+                "id": 10,
+                "type": "yellow",
+                "isBox": "true"
+            }
+        {
+            "id": 10,
+            "type": "yellow",
+            "isBox": "true"
+        }
+    }
+}

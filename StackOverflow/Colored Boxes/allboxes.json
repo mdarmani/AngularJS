@@ -1,0 +1,30 @@
+{
+    "id":0,
+    "color": "null",
+    "isBox": "false"   
+},
+{
+    "id":1,
+    "color":"black",
+    "box": "true"    
+},
+{
+    "id":3,
+    "color":"black",
+    "box": "true"
+},
+{
+    "id":8,
+    "color":"black",
+    "box": "true"
+},
+{
+    "id":10,
+    "color":"black",
+    "box": "true"
+},
+{
+    "id":15,
+    "color":"black",
+    "box": "true"
+}
