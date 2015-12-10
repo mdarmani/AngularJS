@@ -1,3 +1,5 @@
+<h2>4. Controllers</h2>
+
 <div class="container" id="ctrl-as-exmpl" ng-controller="controllers as settings">
 	<h3>4.1 controllerAs View Syntax</h3>
 	<p>Using the controllerAs syntax over the classic controller with $scope syntax.</p>
@@ -232,7 +234,7 @@ function OrderController(creditService) {
 			if (total <= 0) {
 				return 'Sorry, not enough balance';
 			} else {
-				return 'Your balance is ' + total;
+				return 'Your balance is ' + total + ' . Now that was fun wasn\'t it?';
 			}					
 		}
 	}        	 
@@ -246,8 +248,123 @@ function OrderController(creditService) {
 			<span ng-model="orderControl.returnBalance">Credit: {{ orderControl.returnBalance }}</span>
 		</p>
 
+		<p>So it's not that exicting but the whole point of this chapter is as John says to defer login in a controller by delegating to services and fatories. By looking to my code, you can see I did just that.</p>
 		
 	</div>	
 
 	<h3>4.7 Keep Controllers Focused</h3>
+
+	<p>Define a controller for a view, and try not to reuse the controller for other views. Instead, move reusable logic to factories and keep the controller simple and focused on its view.</p>
+
+
+	<p>Why?: Reusing controllers with several views is brittle and good end-to-end (e2e) test coverage is required to ensure stability across large applications.</p>
+
+	<p><b>My explanation: </b> One controller per view is logically correct. It is easier to maintain and above all, more comprehensive for the next developer to pick up where you left.</p>
+
+	<p>When I created my controllers, I made sure I had one for each view. Take a look at the last two I made: </p>
+
+<p>This is the controller that takes care of the avengers application.</p>
+
+<pre>
+function AvengersController(avengersService, $log) {
+    var vm      = this;
+    vm.avengers = [];
+    vm.activate = activate;
+    vm.title    = 'Get the Avengers and log the retrieval';		    
+
+    function activate() {
+        retrieveAvengers();
+        $log.info('Avengers retrieval successful!');
+    }
+
+    function retrieveAvengers() {
+    	vm.avengers = avengersService.getAvengers();
+    	//activate();                
+    }
+}
+</pre>
+
+<p>This is how it's binded in the view.</p>
+
+<pre>
+&lt;div class="container" ng-controller="AvengersController as avengerControl"&gt;;
+/* Arguments here */
+&lt;/div&gt;
+</pre>
+
+<p>This is the controller that takes care of the credit service application.</p>
+
+<pre>
+function OrderController(creditService) {
+    var vm = this;
+    vm.checkCredit = checkCredit;
+    vm.isCreditOk;
+    vm.total = 10;
+
+    function checkCredit() {
+       	vm.returnBalance = creditService.isOrderTotalOk(vm.total);		       	
+    };
+}
+</pre>
+
+<p>And similarly binded in a view of its own</p>
+
+<pre>
+&lt;div class="container" ng-controller="OrderController as orderControl"&gt;
+/* Arguments here */
+&lt;/div&gt;
+</pre>
+	
 	<h3>4.8 Assigning Controllers</h3>
+
+	<p>When a controller must be paired with a view and either component may be re-used by other controllers or views, define controllers along with their routes.</p>
+
+	<p>Note: If a View is loaded via another means besides a route, then use the ng-controller="Avengers as vm" syntax.</p>
+
+	<p>Why?: Pairing the controller in the route allows different routes to invoke different pairs of controllers and views. When controllers are assigned in the view using ng-controller, that view is always associated with the same controller.</p>
+
+	<p>John doesn't recommend to do it like this: </p>
+
+<pre>
+// route-config.js
+angular
+    .module('app')
+    .config(config);
+
+function config($routeProvider) {
+    $routeProvider
+        .when('/avengers', {
+          templateUrl: 'avengers.html'
+        });
+}
+
+//In the view &lt;!-- avengers.html --&gt;
+&lt;div ng-controller="AvengersController as vm"&gt;
+&lt;/div&gt;
+</pre>
+
+<p>John does recommend to do it like this: </p>
+
+<pre>
+// route-config.js
+angular
+    .module('app')
+    .config(config);
+
+function config($routeProvider) {
+    $routeProvider
+        .when('/avengers', {
+            templateUrl: 'avengers.html',
+            controller: 'Avengers',
+            controllerAs: 'vm'
+        });
+}
+
+//In the view &lt;!-- avengers.html --&gt;
+&lt;div&gt;
+&lt;/div&gt;
+</pre>
+
+<p>So what does that piece of code do in raelity? It takes care of the routing service. I've gone and applied the syntax to my entire routing service. If you click on a menu item, you will notice that the routing serice is in use.</p>
+
+<p>As far as I am concerned, all other syntax forms are unacceptable. Go ahead and take a look at the app.config.js file to see this syntax applied.</p>
