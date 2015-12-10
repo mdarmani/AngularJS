@@ -1,0 +1,143 @@
+<h2>3. Modules</h2>
+
+<h3>3.1 Avoid Naming Collisions</h3>
+
+    <p>Use unique naming conventions with separators for sub-modules.</p>
+
+    <p><b>Why?</b> Unique names help avoid module name collisions. Separators help define modules and their submodule hierarchy.</p> 
+
+    <p><b>Example: </b> app may be your root module while app.dashboard and app.users may be modules that are used as dependencies of app.</p>
+
+    <p>In the example below, you can see I've created a unique naming convention for each sub-module. Just take a look at view3.js:</p>
+
+<pre>
+//view3.js
+
+'use strict';
+
+angular.module('myApp.view3', ['ngRoute'])
+
+.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/views/view3', {
+    templateUrl: 'views/view3/view3.html',
+    controller: 'View3Ctrl'
+  });
+}])
+
+.controller('View3Ctrl', [function() {
+
+}]);
+</pre>
+
+<p>Notice module (myApp.view3) has been included in app.module.js</p>
+
+<pre>
+//app.module.js
+
+(function() {
+    'use strict';
+
+    angular
+        .module('myApp', [
+          'ngRoute',
+          'myApp.home',
+          'myApp.view1',
+          'myApp.view2',
+          'myApp.view3',
+          'myApp.view4',
+          'myApp.version'
+        ])        
+})();
+</pre>
+
+<p>
+    <b>Why? </b>
+    <ol>
+        <li>Clear nameing conventions means you will be able to backtrack which sub-module belongs to which component. This saves a lot of time.</li>
+        <li>Turn sub-modules on and off easily from the main module.</li>
+        <li>It means you would like the next developer to undertand you code easily.</li>
+    </ol>
+
+</p>
+
+<h3>3.2 Definitions (aka Setters)</h3>
+
+<p>Don't declare modules using a variable. Instead use the setter syntax.</p>
+
+<p><b>Why?: </b>With 1 component per file, there is rarely a need to introduce a variable for the module.</p>
+
+<pre>
+var app = angular.module('app', [
+    'ngAnimate',
+    'ngRoute',
+    'app.shared',
+    'app.dashboard'
+]);
+</pre>
+
+<p>The setter syntax</p>
+
+<pre>
+angular
+    .module('app', [
+        'ngAnimate',
+        'ngRoute',
+        'app.shared',
+        'app.dashboard'
+    ]);
+</pre>
+
+<h3>3.3 Getters</h3>
+
+<p>Avoid using modules using a variable. Instead use the getter syntax.</p>
+
+<p>Avoid this syntax: </p>
+
+<pre>
+//app.module.js
+var app = angular.module('app');
+app.controller('SomeController', SomeController);
+
+function SomeController() { }
+</pre>
+
+<p>Permit this syntax</p>
+
+<pre>
+//app.module.js    
+angular
+    .module('app')
+    .controller('SomeController', SomeController);
+
+function SomeController() { }
+</pre>
+
+<p><b>Why? </b>
+    <ol>
+        <li>Produces more readable code and avoids variable collisions or leaks</li>
+        <li>Clear naming convention that looks neat</li>
+        <li>Easier to understand for next developer</li>
+        <li>Saves bytes of space</li>
+    </ol>
+</p>
+
+<h3>3.4 Setting vs Getting</h3>
+
+<p>One way to set the module and another to get for all other instances.</p>
+
+<pre>
+// to set a module
+angular.module('app', []);
+
+// to get a module
+angular.module('app');
+</pre>
+
+<p><b>Why? </b>
+    <ol>
+        <li>A module is meant to be set once so it can be retireved multiple times. For that reason, a set module should only have its dependencies declared once.</li>
+        <li>A central place to turn sub-module on and off (be adding and removing module dependencies).</li>
+    </ol>
+</p>
+
+<h3>3.5 Named vs Anonymous Functions</h3>

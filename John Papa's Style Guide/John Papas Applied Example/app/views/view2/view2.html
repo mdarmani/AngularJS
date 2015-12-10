@@ -1,5 +1,101 @@
-<p>This is the partial for view 2.</p>
+<h2>2. IIFE (Immediately Invoked Function Expressions)</h2>
+
+<h3>2.1 JavaScript Closures</h3>
+
+<p>Turn your Angular methods into IIFE's: </p>
+
 <p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
+	<b>Why?</b>
+	<ol>
+		<li>Prevents variable from filling up the global scope and remaining there.</li>
+		<li>Avoids collissions. For example you can now have two controllers with the same name in separate views.</li>
+		<li>Little or no conflicts after minification is applied for production server</li>
+	</ol>
+
 </p>
+
+<p>Avoid: </p>
+
+<pre>
+// logger.js
+angular
+    .module('app')
+    .factory('logger', logger);
+
+// logger function is added as a global variable
+function logger() { }
+
+// storage.js
+angular
+    .module('app')
+    .factory('storage', storage);
+
+// storage function is added as a global variable
+function storage() { }
+</pre>
+
+<p>Permit: </p>
+
+<pre>
+// logger.js
+(function() {
+    'use strict';
+
+    angular
+        .module('app')
+        .factory('logger', logger);
+
+    function logger() { }
+})();
+
+// storage.js
+(function() {
+    'use strict';
+
+    angular
+        .module('app')
+        .factory('storage', storage);
+
+    function storage() { }
+})();
+</pre>
+
+<p>This is how IIFE's look in my files: </p>
+
+<pre>
+// app.factory.js
+(function() {
+	
+    'use strict';
+
+    angular
+        .module('myApp')
+
+        .factory('sessionDataService', function ($log) {
+        	return {
+        		refresh: function () {     		
+			   		$log.info('Executed refresh()');		    
+				}
+        	}        	 
+		})
+})();
+
+//app.module.js
+(function() {
+
+    'use strict';
+
+    angular
+        .module('myApp', [
+		  'ngRoute',
+		  'myApp.home',
+		  'myApp.view1',
+		  'myApp.view2',
+		  'myApp.view4',
+		  'myApp.version'
+		])		
+		
+})();
+</pre>
+
+<p>Use IIFE's whenever possible.</p>

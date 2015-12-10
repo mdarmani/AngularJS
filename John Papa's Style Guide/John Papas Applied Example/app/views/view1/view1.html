@@ -1,370 +1,83 @@
-<h2>4. Controllers</h2>
+<h2>1. Single Responsibiliy</h2>
 
-<div class="container" id="ctrl-as-exmpl" ng-controller="controllers as settings">
-	<h3>4.1 controllerAs View Syntax</h3>
-	<p>Using the controllerAs syntax over the classic controller with $scope syntax.</p>
-	<pre>&lt;div class="container" id="ctrl-as-exmpl" ng-controller="controllers as settings"&gt; &lcub; &lcub; settings.name &rcub; &rcub; &lt;/div&gt;</pre>
-	
-	<h3>4.2 controllerAs Controller Syntax</h3>
+<div class="container">
+	<h3>1.1 Rule of 1</h3>
+
+	<p>Put module, controller and factory in separate files.</p>
+
+	<p><b>Why? </b>Files can become large over time so it makes perfect sense to create a separate JS file for the module, controller and factory methods. Putting all your methods in one file would look unorganised and be a dread for the next developer the work with.</p>
+
+	<p>So with all due respect, avoid: </p>
 
 <pre>
-/* recommended - but see next section */
-function CustomerController() {
-    this.name = {};
-    this.sendMessage = function() { };
-}
+/* All your mehtods in a single file */
+angular
+    .module('app', ['ngRoute'])
+    .controller('SomeController', SomeController)
+    .factory('someFactory', someFactory);
+
+function SomeController() { }
+
+function someFactory() { }
 </pre>
 
-	<h3>4.3 controllerAs with vm</h3>
-	<h4>4.3.1 Check previous and current name application</h4>
-	<p>This application takes a name and compares the last name input with the next. It accepts strings and rejects integers. We are also using Angular's $watch function to watch for changes to the last element in the array.</p>
+<p>Permit and apply: </p>
 
 <pre>
-vm.original = [''];
-vm.save = function() {
-	if (!isNaN(vm.name)) {
-		throw alert('Sorry, not a valid name. Please try again.');
-	} else {
-		vm.original.push(vm.name);
-		if (vm.original.length > 2) {
-			vm.original.shift();
-		}
-	}					 				 		
-	vm.previous = vm.original[0];
-	vm.current = vm.original[1];
-}
-</pre>
+/* All your mehtods in separate files */
+// app.module.js
+angular
+    .module('app', ['ngRoute']);
 
-	<br>	
-	<label>Name: <input id="inputField" type="text" ng-model="settings.name"/></label>
-	<button ng-click="settings.save(settings.name)">Save</button><br/>
-	<ul>
-	    Original = <span ng-bind="settings.original">{{ settings.previous }}</span><br>
-	  	Current = <span ng-bind="settings.name"> {{ settings.current }}</span>
-	</ul>
-
-	<h4>4.3.2 Counting up</h4>
-	<button ng-click="settings.countUp()">Add 1: </button><span> {{ settings.count }}</span>
-	<p>If you look in the console, you will see that we are watching the changes to the names array using Angular's $watch function. Open your console and go ahead and add Names to the array.</p>
-</div>
-
-<div class="container" ng-controller="SessionsController as options">
-	<h3>4.4 Bindable Members Up Top</h3>
-		<p>John recommends that you place bindable members at the top of the controller, alphabetized, and not spread throughout the controller code. </p>
-		<p>Why?: Placing bindable members at the top makes it easy to read and helps you instantly identify which members of the controller can be bound and used in the View.</p>
-		<p>Why?: Setting anonymous functions in-line can be easy, but when those functions are more than 1 line of code they can reduce the readability. Defining the functions below the bindable members (the functions will be hoisted) moves the implementation details down, keeps the bindable members up top, and makes it easier to read.</p>
-		<p>I have created three functions that illustate what John means by this.</p>
-		<button ng-click="options.gotoSession()">Go to Session</button>
-		<button ng-click="options.refresh()">Refresh</button>
-		<button ng-click="options.search()">Search</button>
-
-		<span ng-bind="options.gotoSession"> Sessions: {{ options.gotoSession }}</span>
-
-		<p>Now take a look at the code used:</p>
-
-<pre>
-/* 4.4 Bindable Members Up Top */
-vm.gotoSession = gotoSession;
-vm.refresh = refresh;
-vm.search = search;
-vm.sessions = [];
-
-function gotoSession() {
- 	$log.info('Executed gotoSession()');
-}
-
-function refresh() {
-   	$log.info('Executed refresh()');		    
-}
-
-function search() {
-   	$log.info('Executed search()');
-}
-</pre>
-
-	<p>Notice that in the console, you will see these functions being executed every time a button is clicked.</p>
-
-	<p>{{ sessions.sessions }}</p>
-</div>
-
-<div class="container" ng-controller="AvengersController as avengerControl">
-	<h3>4.5 Function Declarations to Hide Implementation Details</h3>
-	<p>John Papa recommends that we add the important stuff at the top of the code stack. If you look a the code below, I add vm.activate and vm.title at the top because this is easier to read and understand not only for yourself but for the next developer who reads your code.</p>
-
-<pre>
-function AvengersController( avengersService, $log) {
-    var vm      = this;
-    vm.avengers = [];
-    vm.activate = activate; <b>//Good practice</b>
-    vm.title    = 'Get the Avengers and log the retrieval'; <b>//Good practice</b>    
-
-    function activate() {
-        retrieveAvengers();
-        $log.info('Avengers retrieval successful!');
-    }
-
-    function retrieveAvengers() {
-    	vm.avengers = avengersService.getAvengers();
-    	//activate();                
-    }
-}
-</pre>
-
-	<p>Now I just put the code into action. The activate function up binded to the button below which in turn retrieves the Avengers and creates a log in the console.</p>
-	
-<pre>
-
-.factory('avengersService', function ($log) {
-	return {
-		refresh: function () {     		
-	   		$log.info('Executed refresh()');		    
-		},
-		getAvengers: function() {
-			$log.info('getting data...');
-		    return [
-		        {
-		            Name: 'Iron Man',
-		            RealName: 'Anthony "Tony" Edward Stark',
-		            MemberSince: '1963',
-		            Notes: 'Founder of original roster. Joined West Coast Branch in West Coast Avengers vol. 2 #1 (1984). Expelled for Armor War (1987). Current member of the main Avengers team.'
-		        },
-		        {
-		            Name: 'Thor',
-		            RealName: 'Thor Odinson (a.k.a. Dr. Donald Blake, Sigurd Jarlson, Jake Olsen, Odinson)',
-		            MemberSince: '1963',
-		            Notes: 'Former member of the main Avengers team.',
-		        },
-		        {
-		            Name: 'Ant-Man',
-		            RealName: 'Dr. Henry Jonathan "Hank" Pym',
-		            MemberSince: '1963',
-		            Notes: 'Became Giant-Man in Avengers #2 (1963), Goliath in Avengers #28 (1966), and Yellowjacket in Avengers #59 (1969). Expelled as Yellowjacket in Avengers #213 (1981). Joined West Coast Branch as Doctor Pym in West Coast Avengers #21 (1988). Became The Wasp in Mighty Avengers #21 (March 2009). He is one of only two members, the other being Kelsey Leigh (Captain Britain), who have Avengers status in both their civilian and superhero guises. Formerly the head of the Avengers Academy, former member of the Secret Avengers and formerly the leader of the Avengers A.I. Squad. Currently merged with Ultron.',
-		        }
-		    ]
-		}
-	}        	 
-})
-</pre>
-
-	<h5>{{ avengerControl.title }}</h5>
-
-	<p>When the button below is clicked, we retrieve the list of Avengers from the data object array and return them in an unordered list. A log is registered everytime the button is clicked (see the console).</p>
-	<button ng-click="avengerControl.activate()">Get Avengers</button>	
-
-	<ul ng-repeat="hero in avengerControl.avengers">
-		  <li><b>Name: </b>{{hero.Name}}</li>
-		  <li><b>Real Name: </b>{{hero.RealName}}</li>
-		  <li><b>Member since: </b>{{hero.MemberSince}}</li>
-		  <li><b>Extra notes: </b>{{hero.Notes}}</li>		  	
-	</ul>
-
-</div>
-
-	<div class="container" ng-controller="OrderController as orderControl">
-		<h3>4.6 Defer Controller Logic to Services</h3>
-		<p>John recommends to defer logic by delegating to services and factories. Reasons for this:
-		<ol>
-			<li>Logic may be reused by multiple controllers when placed within a service and exposed via a function.</li>
-			<li>Logic in a service can more easily be isolated in a unit test, while the calling logic in the controller can be easily mocked.</li>
-			<li>Removes dependencies and hides implementation details from the controller.</li>
-			<li>Keeps the controller slim, trim, and focused.</li>
-		</ol>
-
-		<p>Here is the code: </p>
-
-<pre>
-/* avoid */
-function OrderController($http, $q, config, userInfo) {
-    var vm = this;
-    vm.checkCredit = checkCredit;
-    vm.isCreditOk;
-    vm.total = 0;
-
-    function checkCredit() {
-        var settings = {};
-        // Get the credit service base URL from config
-        // Set credit service required headers
-        // Prepare URL query string or data object with request data
-        // Add user-identifying info so service gets the right credit limit for this user.
-        // Use JSONP for this browser if it doesn't support CORS
-        return $http.get(settings)
-            .then(function(data) {
-             // Unpack JSON data in the response object
-               // to find maxRemainingAmount
-               vm.isCreditOk = vm.total <= maxRemainingAmount
-            })
-            .catch(function(error) {
-               // Interpret error
-               // Cope w/ timeout? retry? try alternate service?
-               // Re-reject with appropriate error for a user to see
-            });
-    };
-}
-
-/* recommended - John Papa's version */ 
-function OrderController(creditService) {
-    var vm = this;
-    vm.checkCredit = checkCredit;
-    vm.isCreditOk;
-    vm.total = 0;
-
-    function checkCredit() {
-       return creditService.isOrderTotalOk(vm.total)
-          .then(function(isOk) { vm.isCreditOk = isOk; })
-          .catch(showError);
-    };
-}
-
-/* recommended - My version */ 
-function OrderController(creditService) {
-    var vm = this;
-    vm.checkCredit = checkCredit;
-    vm.isCreditOk;
-    vm.total = 10;
-
-    function checkCredit() {
-       	vm.returnBalance = creditService.isOrderTotalOk(vm.total);		       	
-    };
-}
-
-/* And here is the factory function I made */ 
-.factory('creditService', function ($log) {
-	return {
-		isOrderTotalOk: function(total) {					
-			if (total <= 0) {
-				return 'Sorry, not enough balance';
-			} else {
-				return 'Your balance is ' + total + ' . Now that was fun wasn\'t it?';
-			}					
-		}
-	}        	 
-})
-</pre>
-
-		<p>Well it's not exactly the same code, but the idea is there. Now let's see the recommended code in action:</p>
-
-		<p>
-			<button ng-click="orderControl.checkCredit()">Check Credit</button>
-			<span ng-model="orderControl.returnBalance">Credit: {{ orderControl.returnBalance }}</span>
-		</p>
-
-		<p>So it's not that exicting but the whole point of this chapter is as John says to defer login in a controller by delegating to services and fatories. By looking to my code, you can see I did just that.</p>
-		
-	</div>	
-
-	<h3>4.7 Keep Controllers Focused</h3>
-
-	<p>Define a controller for a view, and try not to reuse the controller for other views. Instead, move reusable logic to factories and keep the controller simple and focused on its view.</p>
-
-
-	<p>Why?: Reusing controllers with several views is brittle and good end-to-end (e2e) test coverage is required to ensure stability across large applications.</p>
-
-	<p><b>My explanation: </b> One controller per view is logically correct. It is easier to maintain and above all, more comprehensive for the next developer to pick up where you left.</p>
-
-	<p>When I created my controllers, I made sure I had one for each view. Take a look at the last two I made: </p>
-
-<p>This is the controller that takes care of the avengers application.</p>
-
-<pre>
-function AvengersController(avengersService, $log) {
-    var vm      = this;
-    vm.avengers = [];
-    vm.activate = activate;
-    vm.title    = 'Get the Avengers and log the retrieval';		    
-
-    function activate() {
-        retrieveAvengers();
-        $log.info('Avengers retrieval successful!');
-    }
-
-    function retrieveAvengers() {
-    	vm.avengers = avengersService.getAvengers();
-    	//activate();                
-    }
-}
-</pre>
-
-<p>This is how it's binded in the view.</p>
-
-<pre>
-&lt;div class="container" ng-controller="AvengersController as avengerControl"&gt;;
-/* Arguments here */
-&lt;/div&gt;
-</pre>
-
-<p>This is the controller that takes care of the credit service application.</p>
-
-<pre>
-function OrderController(creditService) {
-    var vm = this;
-    vm.checkCredit = checkCredit;
-    vm.isCreditOk;
-    vm.total = 10;
-
-    function checkCredit() {
-       	vm.returnBalance = creditService.isOrderTotalOk(vm.total);		       	
-    };
-}
-</pre>
-
-<p>And similarly binded in a view of its own</p>
-
-<pre>
-&lt;div class="container" ng-controller="OrderController as orderControl"&gt;
-/* Arguments here */
-&lt;/div&gt;
-</pre>
-	
-	<h3>4.8 Assigning Controllers</h3>
-
-	<p>When a controller must be paired with a view and either component may be re-used by other controllers or views, define controllers along with their routes.</p>
-
-	<p>Note: If a View is loaded via another means besides a route, then use the ng-controller="Avengers as vm" syntax.</p>
-
-	<p>Why?: Pairing the controller in the route allows different routes to invoke different pairs of controllers and views. When controllers are assigned in the view using ng-controller, that view is always associated with the same controller.</p>
-
-	<p>John doesn't recommend to do it like this: </p>
-
-<pre>
-// route-config.js
+// some.controller.js
 angular
     .module('app')
-    .config(config);
+    .controller('SomeController', SomeController);
 
-function config($routeProvider) {
-    $routeProvider
-        .when('/avengers', {
-          templateUrl: 'avengers.html'
-        });
-}
+function SomeController() { }
 
-//In the view &lt;!-- avengers.html --&gt;
-&lt;div ng-controller="AvengersController as vm"&gt;
-&lt;/div&gt;
-</pre>
-
-<p>John does recommend to do it like this: </p>
-
-<pre>
-// route-config.js
+// someFactory.js
 angular
     .module('app')
-    .config(config);
+    .factory('someFactory', someFactory);
 
-function config($routeProvider) {
-    $routeProvider
-        .when('/avengers', {
-            templateUrl: 'avengers.html',
-            controller: 'Avengers',
-            controllerAs: 'vm'
-        });
-}
-
-//In the view &lt;!-- avengers.html --&gt;
-&lt;div&gt;
-&lt;/div&gt;
+function someFactory() { }
 </pre>
 
-<p>So what does that piece of code do in raelity? It takes care of the routing service. I've gone and applied the syntax to my entire routing service. If you click on a menu item, you will notice that the routing serice is in use.</p>
+<p>Take a look at this file structure of how it should look: </p>
 
-<p>As far as I am concerned, all other syntax forms are unacceptable. Go ahead and take a look at the app.config.js file to see this syntax applied.</p>
+<pre>
+app (folder)
+--- views (folder)
+------ home (folder)
+--------- home.html
+--------- home.js
+--------- home_test.js 
+--- app.config.js
+--- app.module.js
+--- app.controller.js
+--- app.factory.js
+</pre>
+
+<p>So you see I've gone and created a couple of central JS files for my application. Views however, also have a controller of their own for this controller contains specific code to be binded by that view. Take a look at the contents of home.js: </p>
+
+<pre>
+'use strict';
+
+angular.module('myApp.home', ['ngRoute'])
+
+.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/views/home', {
+    templateUrl: 'views/home/home.html',
+    controller: 'HomeCtrl'
+  });
+}])
+
+.controller('HomeCtrl', [function() {
+
+}]);
+</pre>
+
+<p>We see here that the routeprovider has been defined so that the browser will load the relevant template when the url changes. We also see that it's now also possible to define a controller for this views straight from within the view folder.</p>
+
+</div>
